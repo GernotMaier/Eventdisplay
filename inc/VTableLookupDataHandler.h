@@ -43,51 +43,51 @@ class VTableLookupDataHandler
 {
     private:
         unsigned int fDebug;
-        
+
         VTableLookupRunParameter* fTLRunParameter;  //! lookup parameters
-        
+
         UInt_t fNMethods;                            //!< number of direction and core reconstruction methods in evndisp
         vector< string > finputfile;              //!< input file name
         string foutputfile;                       //!< output file name
         TFile* fOutFile;                          //!< point to output file
         bool   fwrite;                            //!< true for table filling
-        
+
         unsigned int fNTel;                       //!< number of telescopes
         unsigned int fNTelComb;                   //!< number of telescope combinations
         Long64_t fNEntries;                       //!< total number of events in input tree
         int fEventCounter;                        //!< event counter for input tree
         int fMethod;                              //!< which direction and core reconstruction method data should be used
-        
+
         double fMaxTotalTime;                     //!< time to analyse in a run (in [s])
         double fTotalTime;                        //!< time passed in analysing the run (in [s])
         double fTotalTime0;                       //!< time of first event (in [s])
-        
+
         VEmissionHeightCalculator* fEmissionHeightCalculator;
         VDispAnalyzer*             fDispAnalyzerDirection;
         VDispAnalyzer*             fDispAnalyzerEnergy;
         VDispAnalyzer*             fDispAnalyzerCore;
         VDispAnalyzer*             fDispAnalyzerDirectionError;
-        
+
         double fSelectRandom;
         int fSelectRandomSeed;
         TRandom3* fRandom;
-        
+
         int fSSR_NImages_min;
         float fSSR_AxesAngles_min;
-        
+
         // MC parameter
         unsigned int fMinImages;
         double fMC_distance_to_cameracenter_min;
         double fMC_distance_to_cameracenter_max;
-        
+
         double fMCSpectralIndex;
         double fMCMinEnergy;
         double fMCMaxEnergy;
         double fSpectralIndex;
-        
+
         vector< double > fNoiseLevel;
         vector< double > fCurrentNoiseLevel;
-        
+
         // input trees
         int fEventDisplayFileFormat;
         TChain* fTshowerpars;
@@ -99,9 +99,9 @@ class VTableLookupDataHandler
         vector< Ctpars* > ftpars;
         vector< VPointingCorrectionsTreeReader* > fpointingCorrections;
         TChain* fDeepLearnerpars;
-        
+
         double fEventWeight;
-        
+
         // MC energy histograms
         TH1D* hE0mc;
         TH2D* hXYmc;
@@ -113,7 +113,7 @@ class VTableLookupDataHandler
         TH2D* hDE0trig;
         TH2D* hWE0trig;
         TList* hisList;
-        
+
         // telescope positions from fTtelconfig
         double fTelX[VDST_MAXTELESCOPES];
         double fTelY[VDST_MAXTELESCOPES];
@@ -134,13 +134,13 @@ class VTableLookupDataHandler
         float  fArrayPointing_Elevation;
         float  fArrayPointing_Azimuth;
         float  fArrayPointing_RotationAngle;
-        
+
         // output trees
         TTree* fOTree;
         bool fShortTree;                          //!< use short version of output tree
         bool bWriteMCPars;
         bool fTreeWithParameterErrors;
-        
+
         // cut statistics
         bool fEventStatus;
         unsigned int fNStats_All;
@@ -151,7 +151,7 @@ class VTableLookupDataHandler
         unsigned int fNStats_WobbleCut;
         unsigned int fNStats_WobbleMinCut;
         unsigned int fNStats_WobbleMaxCut;
-        
+
         void   calcDistances();                //!< calculate distances between telescopes and shower core
         void   calcEmissionHeights();
         double calculateMeanNoiseLevel( bool bCurrentNoiseLevel = false );
@@ -172,16 +172,16 @@ class VTableLookupDataHandler
         void   setEventWeightfromMCSpectrum();
         void   setSelectRandom( double iX, int iS );
         void   writeDeadTimeHistograms();
-        
+
     public:
-    
+
         //  data written to output file
-        
+
         int runNumber;
         int eventNumber;
         int MJD;
         double time;
-        
+
         bool fIsMC;                               //!< data is MC
         int    fMCPrimary;
         double fMCEnergy;                         //!< MC energy
@@ -199,7 +199,7 @@ class VTableLookupDataHandler
         Int_t	       fMCCorsikaShowerID;
         Float_t        fMCFirstInteractionHeight;
         Float_t	       fMCFirstInteractionDepth;
-        
+
         ULong64_t LTrig;
         unsigned int fNTrig;
         int fNImages;
@@ -273,6 +273,7 @@ class VTableLookupDataHandler
         double ftgrad_x_telType[VDST_MAXTELESCOPES];
         double ftchisq_x [VDST_MAXTELESCOPES];
         double fweight   [VDST_MAXTELESCOPES];    //!< always 1.
+        double fweightDispBDTs[VDST_MAXTELESCOPES];
         int    fFitstat  [VDST_MAXTELESCOPES];
         double fR        [VDST_MAXTELESCOPES];    //!< distance from each telescope to reconstructed shower core
         double fRTel        [VDST_MAXTELESCOPES];    //!< distance from each telescope to reconstructed shower core
@@ -302,7 +303,7 @@ class VTableLookupDataHandler
         float  fcrossO_short[VDST_MAXTELESCOPES];
         float  ftgrad_x_short[VDST_MAXTELESCOPES];
         int    fFitstat_short[VDST_MAXTELESCOPES];
-        
+
         UInt_t PixelListN[VDST_MAXTELESCOPES];
         UInt_t PixelListNPixelNN;
         UInt_t PixelID[VDST_MAXTELESCOPES* VDST_MAXCHANNELS];
@@ -310,11 +311,11 @@ class VTableLookupDataHandler
         Float_t PixelIntensity[VDST_MAXTELESCOPES* VDST_MAXCHANNELS];
         Float_t PixelTimingT0[VDST_MAXTELESCOPES* VDST_MAXCHANNELS];
         Float_t PixelPE[VDST_MAXTELESCOPES* VDST_MAXCHANNELS];
-        
+
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
         // results
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
+
         int    fnmscw;                            //!< number of images used for mscw/mscl calculation
         int    fnenergyT;                         //!< number of images used for the energy calculation
         int    fenergyQL;                         //!< quality label for energy calculation
@@ -324,14 +325,14 @@ class VTableLookupDataHandler
         float  ftmscw_sigma[VDST_MAXTELESCOPES];  //!< mscw  sigma  assigned to each telescope
         // MWR
         float  fmwr;                              //!< mean width ratio
-        
+
         // MSCL
         double fmscl;                             //!< mean scaled length
         double ftmscl    [VDST_MAXTELESCOPES];    //!< mscl assigned to each telescope
         float  ftmscl_sigma[VDST_MAXTELESCOPES];  //!< mscl  sigma  assigned to each telescope
         // MWL
         float  fmlr;                              //!< mean length ratio
-        
+
         // reconstructed energy
         double fenergyS;                          //!< reconstructed primary energy
         double fechi2S;                           //!< chi2 from reconstructed primary energy
@@ -339,22 +340,22 @@ class VTableLookupDataHandler
         double feAbsError;                        //!< median absolute error of reconstructed energy
         double fES       [VDST_MAXTELESCOPES];    //!< energy assigned to each telescope (method 1)
         double fES_short [VDST_MAXTELESCOPES];    //!< energy assigned to each telescope (method 1) (depending on imgsel)
-        
+
         // time gradient
         double fmsct;                             //!< mean scaled time gradient
         double ftmsct    [VDST_MAXTELESCOPES];    //!< msct assigned to each telescope
         float  ftmsct_sigma[VDST_MAXTELESCOPES];  //!< msct sigma assigned to each telescope
-        
+
         // emission height
         unsigned int fNTelPairs;
         float  fEmissionHeightMean;
         float  fEmissionHeightChi2;
         //!< (note that maximum array length should be larger than MaxNbrTel
         float  fEmissionHeightT[VDST_MAXTELESCOPES];
-        
+
         double fSizeSecondMax;
         double ftheta2_All[25];
-        
+
         // disp related variables
         float fXoff_edisp;
         float fYoff_edisp;
@@ -369,20 +370,20 @@ class VTableLookupDataHandler
         unsigned int fnxyoff;                   //! number of images used for disp direction reconstruction
         // difference in disp event direction between telescopes
         double fDispDiff;
-        
+
         // dispBDT cut parameter
         double fmaxdist_qc[VDST_MAXTELESCOPES];
-        
+
         // deep learner parameters
         bool fIsDeepLearner;
         double dl_gammaness;
         Bool_t dl_isGamma;
-        
+
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         VTableLookupDataHandler( bool iWrite, VTableLookupRunParameter* iT = 0 );
         ~VTableLookupDataHandler() {}
-        
+
         bool cut()                                //!< apply cuts on successful reconstruction to input data
         {
             return cut( false );
@@ -573,9 +574,16 @@ class VTableLookupDataHandler
             return ftgrad_x;
         }
         double* getTimeGradient( ULong64_t iTelType );
-        double* getWeight()
+        double* getWeight(bool dispBDT=false)
         {
-            return fweight;
+            if( dispBDT )
+            {
+                return fweightDispBDTs;
+            }
+            else
+            {
+                return fweight;
+            }
         }
         double* getWidth()
         {
